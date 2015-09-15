@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace otrsrest
 {
@@ -72,6 +73,7 @@ namespace otrsrest
         }
     }
 
+
     public class NewArticle
     {
         // Class to hold new article information.
@@ -89,6 +91,7 @@ namespace otrsrest
         }
     }
 
+
     public class dfield
     {
         // Class to hold dynamic field information
@@ -96,6 +99,7 @@ namespace otrsrest
         public string Name { get; set; }
         public string Value { get; set; }
     }
+    
 
     public class attach
     {
@@ -105,6 +109,7 @@ namespace otrsrest
         public string ContentType { get; set; }
         public string Filename { get; set; }
     }
+
 
     public class TicketCreateRequest
     {
@@ -156,6 +161,7 @@ namespace otrsrest
         }
     }
 
+
     public class ResponseTicket
     {
         // Class to hold the response data from OTRS.
@@ -164,6 +170,7 @@ namespace otrsrest
         public string ArticleID;
         public string TicketNumber;
     }
+
 
     public class TicketCreator
     {
@@ -242,6 +249,72 @@ namespace otrsrest
             return httpresponse.StatusCode;
         }
 
+    }
+
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    public class CreateNewTicket
+    {
+        public string Customer { get; set; }
+        public string Title { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public string Queue { get; set; }
+        public string State { get; set; }
+        public int Priority { get; set; }
+        public string Attachment { get; set; }
+        private TicketCreator myticket;
+        public string TicketNumber { get; set; }
+        public string TicketID { get; set; }
+        public string ArticleID { get; set; }
+
+        public CreateNewTicket()
+        {
+            myticket = new TicketCreator();
+        }
+
+        public string CreateTicket()
+        {
+            if (!String.IsNullOrEmpty(Customer))
+            {
+                myticket.request.Ticket.CustomerUser = Customer;
+            }
+            if (!String.IsNullOrEmpty(Queue))
+            {
+                myticket.request.Ticket.Queue = Queue;
+            }
+            if (!String.IsNullOrEmpty(State))
+            {
+                myticket.request.Ticket.State = State;
+            }
+            if (Priority != 0)
+            {
+                myticket.request.Ticket.PriorityID = Priority;
+            }
+            if (!String.IsNullOrEmpty(Attachment))
+            {
+                myticket.request.AddAttachment(Attachment);
+            }
+
+            if (String.IsNullOrEmpty(Title)) {
+                Title = Subject;
+            }
+            if (String.IsNullOrEmpty(Subject)) {
+                Subject = Title;
+            }
+
+            myticket.request.Ticket.Title = Title;
+            myticket.request.Article.Subject = Subject;
+            myticket.request.Article.Body = Message;
+
+            myticket.Request().Wait();
+
+            TicketNumber = myticket.response.TicketNumber;
+            TicketID = myticket.response.TicketID;
+            ArticleID = myticket.response.ArticleID;
+
+            return TicketNumber;
+        }
     }
 
 }
