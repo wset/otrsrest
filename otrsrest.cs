@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.EnterpriseServices;
 
 namespace otrsrest
 {
@@ -161,6 +163,43 @@ namespace otrsrest
         }
     }
 
+    public static class Settings
+    {
+        public static bool Update(string _name, string _value)
+        {
+        // Function to update stored login details for the OTRS connector.
+
+            if (_name == "password")
+            {
+                // Encode passwords
+                byte[] unenc = Encoding.Unicode.GetBytes(_value);
+
+                // Generate additional entropy (will be used as the Initialization vector)
+                byte[] entropy = new byte[20];
+                using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(entropy);
+                }
+
+                byte[] enc = ProtectedData.Protect(unenc, entropy, DataProtectionScope.LocalMachine);
+
+                _value = Encoding.Unicode.GetString(enc);
+                Properties.otrsrest.Default.entropy = System.Text.Encoding.Unicode.GetString(entropy);
+            }
+
+            if( _name != "entropy" && Properties.otrsrest.Default[_name] != null )
+            {
+                // If setting exists update it.
+                Properties.otrsrest.Default[_name] = _value;
+                Properties.otrsrest.Default.Save();
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+    }
 
     public class ResponseTicket
     {
@@ -187,8 +226,8 @@ namespace otrsrest
         public ResponseTicket response { get; set; }
 
         // Define private variables for username and password, and set defaults.
-        private string _user = "username";
-        private string _password = "password";
+        private string _user;
+        private string _password;
 
         // Create write-only properties to allow access to set username and password.
         public string user
@@ -225,6 +264,13 @@ namespace otrsrest
             otrs.BaseAddress = new Uri("http://www.wsetonlineclassroom.com/otrs/nph-genericinterface.pl/Webservice/OCAdminREST");
             otrs.DefaultRequestHeaders.Accept.Clear();
             otrs.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // Load username and password.
+            _user = Properties.otrsrest.Default.user;
+            byte[] enc = Encoding.Unicode.GetBytes(Properties.otrsrest.Default.password);
+            byte[] entropy = Encoding.Unicode.GetBytes(Properties.otrsrest.Default.entropy);
+            byte[] unenc = ProtectedData.Unprotect(enc, entropy, DataProtectionScope.CurrentUser);
+            _password = Encoding.Unicode.GetString(unenc);
         }
 
         // Request() method runs the REST request returning the HttpStatusCode 
@@ -253,7 +299,7 @@ namespace otrsrest
 
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class CreateNewTicket
+    public class CreateNewTicket : ServicedComponent
     {
         public string Customer { get; set; }
         public string Title { get; set; }
