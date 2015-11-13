@@ -25,7 +25,7 @@ namespace otrsrest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ocadmin")]
+        [global::System.Configuration.DefaultSettingValueAttribute("restuser")]
         public string user {
             get {
                 return ((string)(this["user"]));
@@ -56,6 +56,54 @@ namespace otrsrest.Properties {
             }
             set {
                 this["entropy"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://path.to/otrs/nph-genericinterface.pl/Webservice/RESTService")]
+        public string uri {
+            get {
+                return ((string)(this["uri"]));
+            }
+            set {
+                this["uri"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NewTicket")]
+        public string resource {
+            get {
+                return ((string)(this["resource"]));
+            }
+            set {
+                this["resource"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("restcustomer")]
+        public string customer {
+            get {
+                return ((string)(this["customer"]));
+            }
+            set {
+                this["customer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("raw")]
+        public string queue {
+            get {
+                return ((string)(this["queue"]));
+            }
+            set {
+                this["queue"] = value;
             }
         }
     }

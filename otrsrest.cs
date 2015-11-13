@@ -68,8 +68,8 @@ namespace otrsrest
         public NewTicket()
         {
             // Set default values for CustomerUser, Queue, State and PriorityID
-            CustomerUser = "oc";
-            Queue = "Online Classroom";
+            CustomerUser = Properties.otrsrest.Default.customer;
+            Queue = Properties.otrsrest.Default.queue;
             State = "new";
             PriorityID = 3;
         }
@@ -163,9 +163,11 @@ namespace otrsrest
         }
     }
 
-    public static class Settings
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    public class Settings
     {
-        public static bool Update(string _name, string _value)
+        public bool Update(string _name, string _value)
         {
         // Function to update stored login details for the OTRS connector.
 
@@ -197,6 +199,18 @@ namespace otrsrest
             else 
             {
                 return false;
+            }
+        }
+
+        public string Get(string _name)
+        {
+            if(_name != "password" && _name != "entropy" && Properties.otrsrest.Default[_name] != null )
+            {
+                return Properties.otrsrest.Default[_name].ToString();
+            }
+            else
+            {
+                return "";
             }
         }
     }
@@ -258,10 +272,10 @@ namespace otrsrest
             response = new ResponseTicket();
 
             // Set default resource.
-            resource = "/NewTicket";
+            resource = "/" + Properties.otrsrest.Default.resource;
 
             // Set default options for otrs object.
-            otrs.BaseAddress = new Uri("http://www.wsetonlineclassroom.com/otrs/nph-genericinterface.pl/Webservice/OCAdminREST");
+            otrs.BaseAddress = new Uri(Properties.otrsrest.Default.uri);
             otrs.DefaultRequestHeaders.Accept.Clear();
             otrs.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
