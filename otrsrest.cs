@@ -377,4 +377,25 @@ namespace otrsrest
         }
     }
 
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    public class version : ServicedComponent
+    {
+        public int major { get; private set; }
+        public int minor { get; private set;  }
+        public int revision { get; private set;  }
+
+        public version()
+        {
+            major = 1;
+            minor = 0;
+            revision = 0;
+        }
+
+        public string Get()
+        {
+            return "v" + major.ToString() + "." + minor.ToString() + "." + revision.ToString();
+        }
+    }
+
 }
