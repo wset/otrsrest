@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using System.EnterpriseServices;
 
 namespace otrsrest
 {
@@ -313,7 +312,7 @@ namespace otrsrest
 
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class CreateNewTicket : ServicedComponent
+    public class CreateNewTicket
     {
         public string Customer { get; set; }
         public string Title { get; set; }
@@ -379,7 +378,7 @@ namespace otrsrest
 
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class version : ServicedComponent
+    public class version
     {
         public int major { get; private set; }
         public int minor { get; private set;  }
