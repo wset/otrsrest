@@ -164,8 +164,9 @@ namespace otrsrest
 
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class Settings
+    public class UpdateSettings
     {
+        [System.STAThread]
         public bool Update(string _name, string _value)
         {
         // Function to update stored login details for the OTRS connector.
@@ -201,6 +202,7 @@ namespace otrsrest
             }
         }
 
+        [System.STAThread]
         public string Get(string _name)
         {
             if(_name != "password" && _name != "entropy" && Properties.otrsrest.Default[_name] != null )
@@ -314,25 +316,18 @@ namespace otrsrest
     [ClassInterface(ClassInterfaceType.AutoDual)]
     public class CreateNewTicket
     {
-        public string Customer { get; set; }
-        public string Title { get; set; }
-        public string Subject { get; set; }
-        public string Message { get; set; }
-        public string Queue { get; set; }
-        public string State { get; set; }
-        public int Priority { get; set; }
-        public string Attachment { get; set; }
         private TicketCreator myticket;
-        public string TicketNumber { get; set; }
-        public string TicketID { get; set; }
-        public string ArticleID { get; set; }
+        private string TicketNumber;
+        private string TicketID;
+        private string ArticleID;
 
         public CreateNewTicket()
         {
             myticket = new TicketCreator();
         }
 
-        public string CreateTicket()
+        [System.STAThread]
+        public string CreateTicket(string Subject, string Message, [Optional] string Title, [Optional] string Customer, [Optional] string Queue, [Optional] string State, [Optional] int Priority, [Optional] string Attachment)
         {
             if (!String.IsNullOrEmpty(Customer))
             {
@@ -378,22 +373,40 @@ namespace otrsrest
 
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class version
+    public class buildversion
     {
-        public int major { get; private set; }
-        public int minor { get; private set;  }
-        public int revision { get; private set;  }
-
-        public version()
+        public buildversion()
         {
-            major = 1;
-            minor = 0;
-            revision = 0;
         }
 
+        [System.STAThread]
         public string Get()
         {
-            return "v" + major.ToString() + "." + minor.ToString() + "." + revision.ToString();
+            return "v" + typeof(CreateNewTicket).Assembly.GetName().Version;
+        }
+
+        [System.STAThread]
+        public int major()
+        {
+            return typeof(CreateNewTicket).Assembly.GetName().Version.Major;
+        }
+
+        [System.STAThread]
+        public int minor()
+        {
+            return typeof(CreateNewTicket).Assembly.GetName().Version.Minor;
+        }
+
+        [System.STAThread]
+        public int buildno()
+        {
+            return typeof(CreateNewTicket).Assembly.GetName().Version.Build;
+        }
+
+        [System.STAThread]
+        public int revision()
+        {
+            return typeof(CreateNewTicket).Assembly.GetName().Version.Revision;
         }
     }
 
