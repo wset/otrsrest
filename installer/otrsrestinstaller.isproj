@@ -29,7 +29,7 @@
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2015Limited\InstallShield.targets"/>
 	<ItemGroup>
-		<ProjectReference Include="..\otrsrest\otrsrest.csproj">
+		<ProjectReference Include="..\otrsrest.csproj">
 			<Name>otrsrest</Name>
 			<Project>{29E77EE1-9588-4F32-8F97-22EEEC879DD5}</Project>
 		</ProjectReference>

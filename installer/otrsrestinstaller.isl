@@ -340,8 +340,10 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>otrsrest.Primary_output</td><td>{871A314E-EC8E-4C8F-9311-E081457AB2A2}</td><td>INSTALLDIR</td><td>2</td><td/><td>otrsrest.primary_output</td><td>52</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>otrsrest.tlb</td><td>{53B02E62-961A-45F2-8337-5A1FB38E7FB9}</td><td>INSTALLDIR</td><td>2</td><td/><td>otrsrest.tlb</td><td>20</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td>{B92CA9C3-2368-4E89-AAEB-E59A8C7030F6}</td><td>ProgramFiles64Folder</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{E1BB8F55-9A68-49C1-AAEE-4829876E5530}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>otrsrest.Primary_output</td><td>{871A314E-EC8E-4C8F-9311-E081457AB2A2}</td><td>INSTALLDIR</td><td>258</td><td/><td>otrsrest.primary_output</td><td>52</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>otrsrest.tlb</td><td>{F6926FAA-970B-439B-9C8B-079FD37A1204}</td><td>INSTALLDIR</td><td>258</td><td/><td>otrsrest.tlb</td><td>20</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1010,9 +1012,9 @@
 		<row><td>SetupCompleteError</td><td>Finish</td><td>DoAction</td><td>CleanUp</td><td>ISSCRIPTRUNNING="1"</td><td>1</td></row>
 		<row><td>SetupCompleteError</td><td>Finish</td><td>DoAction</td><td>ShowMsiLog</td><td>MsiLogFileLocation And (ISSHOWMSILOG="1")</td><td>3</td></row>
 		<row><td>SetupCompleteError</td><td>Finish</td><td>EndDialog</td><td>Exit</td><td>1</td><td>2</td></row>
-		<row><td>SetupCompleteSuccess</td><td>OK</td><td>DoAction</td><td>CleanUp</td><td>ISSCRIPTRUNNING="1"</td><td>1</td></row>
-		<row><td>SetupCompleteSuccess</td><td>OK</td><td>DoAction</td><td>ShowMsiLog</td><td>MsiLogFileLocation And (ISSHOWMSILOG="1") And NOT ISENABLEDWUSFINISHDIALOG</td><td>6</td></row>
-		<row><td>SetupCompleteSuccess</td><td>OK</td><td>EndDialog</td><td>Exit</td><td>1</td><td>2</td></row>
+		<row><td>SetupCompleteSuccess</td><td>OK</td><td>DoAction</td><td>CleanUp</td><td>ISSCRIPTRUNNING="1"</td><td>3</td></row>
+		<row><td>SetupCompleteSuccess</td><td>OK</td><td>DoAction</td><td>ShowMsiLog</td><td>MsiLogFileLocation And (ISSHOWMSILOG="1") And NOT ISENABLEDWUSFINISHDIALOG</td><td>8</td></row>
+		<row><td>SetupCompleteSuccess</td><td>OK</td><td>EndDialog</td><td>Exit</td><td>1</td><td>4</td></row>
 		<row><td>SetupError</td><td>A</td><td>EndDialog</td><td>ErrorAbort</td><td>1</td><td>0</td></row>
 		<row><td>SetupError</td><td>C</td><td>EndDialog</td><td>ErrorCancel</td><td>1</td><td>0</td></row>
 		<row><td>SetupError</td><td>I</td><td>EndDialog</td><td>ErrorIgnore</td><td>1</td><td>0</td></row>
@@ -1050,8 +1052,11 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>INSTALLDIR</td><td>otrsrest.Primary_output</td></row>
 		<row><td>INSTALLDIR</td><td>otrsrest.tlb</td></row>
+		<row><td>ProgramFiles64Folder</td><td>ISX_DEFAULTCOMPONENT</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1168,7 +1173,7 @@
 		<row><td>TempFolder</td><td>TARGETDIR</td><td>.:Temp</td><td/><td>0</td><td/></row>
 		<row><td>TemplateFolder</td><td>TARGETDIR</td><td>.:ShellNew</td><td/><td>0</td><td/></row>
 		<row><td>USERPROFILE</td><td>TARGETDIR</td><td>.:USERPR~1|UserProfile</td><td/><td>0</td><td/></row>
-		<row><td>WSET</td><td>ProgramFilesFolder</td><td>WSET</td><td/><td>0</td><td/></row>
+		<row><td>WSET</td><td>ProgramFiles64Folder</td><td>WSET</td><td/><td>0</td><td/></row>
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
 	</table>
@@ -1862,6 +1867,8 @@
 	<table name="FeatureComponents">
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>AlwaysInstall</td><td>otrsrest.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>otrsrest.tlb</td></row>
 	</table>
@@ -1879,7 +1886,7 @@
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
 		<row><td>otrsrest.primary_output</td><td>otrsrest.Primary_output</td><td>otrsrest.Primary output</td><td>0</td><td/><td/><td>0</td><td>1</td><td>&lt;otrsrest&gt;|Built</td><td>3</td><td/></row>
-		<row><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>0</td><td/><td/><td>0</td><td>1</td><td>C:\Users\obarritt\Documents\Visual Studio 2013\Projects\otrsrest\bin\Release\otrsrest.tlb</td><td>1</td><td/></row>
+		<row><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>0</td><td/><td/><td>0</td><td>1</td><td>C:\Program Files\WSET\OTRS REST Connector\otrsrest.tlb</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2021,8 +2028,10 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_A5A467BD_6224_441A_BD1A_669B755F868A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_B13E8157_0E58_4512_A052_FD026D7873F1_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>otrsrest.Primary_output</td><td/><td/><td>_0FE4DCC0_0D95_4082_98DD_9B64341C4290_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>otrsrest.tlb</td><td/><td/><td>_2DCFCB35_FDE0_4145_BA3B_9D258D280B92_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>otrsrest.tlb</td><td/><td/><td>_AA5269ED_200C_498D_A2A6_F05E215BFB24_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -2612,7 +2621,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>WSET</td><td>0</td><td/><td>-2052906418</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>WSET</td><td>0</td><td/><td>-1113349334</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-2052908466</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-2052908466</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2052881842</td></row>
@@ -3713,8 +3722,8 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>-2052908466</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-2052908466</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-2052908466</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.WSET.com</td><td>0</td><td/><td>-2052906418</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>WSET</td><td>0</td><td/><td>-2052906418</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.WSET.com</td><td>0</td><td/><td>-1113349334</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>WSET</td><td>0</td><td/><td>-1113349334</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-2052908466</td></row>
 	</table>
 
@@ -3961,7 +3970,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{8A22F5A8-AE37-49FB-B24A-EE28506FA724}</td></row>
 		<row><td>ISUSSignature</td><td>{70766A81-5FDD-4D11-BA7C-7E4C51C7F2BD}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewFileExtensions,viewObjects</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewFileExtensions,viewObjects,viewUpgradePaths,viewUpdateService,viewAppFiles,viewRegistry,viewIniFiles,viewEnvironmentVariables,viewServices,viewRelease,viewCustomActions</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>

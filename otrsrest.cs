@@ -13,6 +13,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
+
 namespace otrsrest
 {
     // OTRS REST Connector.
@@ -163,8 +164,17 @@ namespace otrsrest
     }
 
     [ComVisible(true)]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class UpdateSettings
+    [Guid("76FC70C9-A9C6-49BF-A444-0CE5D212BB2C")]
+    public interface IUpdateSettings
+    {
+        bool Update(string name, string value);
+        string Get(string name);
+    }
+
+    [ComVisible(true)]
+    [Guid("86353DF1-8530-495D-B8A3-02281CC5A1F5")]
+    [ClassInterface(ClassInterfaceType.None)]
+    public class UpdateSettings : IUpdateSettings
     {
         [System.STAThread]
         public bool Update(string _name, string _value)
@@ -183,13 +193,14 @@ namespace otrsrest
                     rng.GetBytes(entropy);
                 }
 
-                byte[] enc = ProtectedData.Protect(unenc, entropy, DataProtectionScope.LocalMachine);
+                byte[] enc = ProtectedData.Protect(unenc, entropy, DataProtectionScope.CurrentUser);
 
-                _value = Encoding.Unicode.GetString(enc);
-                Properties.otrsrest.Default.entropy = System.Text.Encoding.Unicode.GetString(entropy);
+                Properties.otrsrest.Default.password = enc;
+                Properties.otrsrest.Default.entropy = entropy;
+                Properties.otrsrest.Default.Save();
+                return true;
             }
-
-            if( _name != "entropy" && Properties.otrsrest.Default[_name] != null )
+            else if( _name != "entropy" && Properties.otrsrest.Default[_name] != null )
             {
                 // If setting exists update it.
                 Properties.otrsrest.Default[_name] = _value;
@@ -264,6 +275,7 @@ namespace otrsrest
         private UriBuilder resourceuri;
         private NameValueCollection querystring;
 
+
         public TicketCreator()
         {
             // Initialize the request, otrs, httpresponse and response objects.
@@ -282,8 +294,8 @@ namespace otrsrest
 
             // Load username and password.
             _user = Properties.otrsrest.Default.user;
-            byte[] enc = Encoding.Unicode.GetBytes(Properties.otrsrest.Default.password);
-            byte[] entropy = Encoding.Unicode.GetBytes(Properties.otrsrest.Default.entropy);
+            byte[] enc = Properties.otrsrest.Default.password;
+            byte[] entropy = Properties.otrsrest.Default.entropy;
             byte[] unenc = ProtectedData.Unprotect(enc, entropy, DataProtectionScope.CurrentUser);
             _password = Encoding.Unicode.GetString(unenc);
         }
@@ -313,8 +325,16 @@ namespace otrsrest
     }
 
     [ComVisible(true)]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class CreateNewTicket
+    [Guid("6EA65648-9201-4AF8-ACC4-CD3B57C43619")]
+    public interface ICreateNewTicket
+    {
+        string CreateTicket(string Subject, string Message, [Optional] string Title, [Optional] string Customer, [Optional] string Queue, [Optional] string State, [Optional] int Priority, [Optional] string Attachment);
+    }
+
+    [ComVisible(true)]
+    [Guid("1793697B-13FB-442A-8AB6-76781119EA4D")]
+    [ClassInterface(ClassInterfaceType.None)]
+    public class CreateNewTicket : ICreateNewTicket
     {
         private TicketCreator myticket;
         private string TicketNumber;
@@ -323,6 +343,7 @@ namespace otrsrest
 
         public CreateNewTicket()
         {
+            
             myticket = new TicketCreator();
         }
 
@@ -372,8 +393,20 @@ namespace otrsrest
     }
 
     [ComVisible(true)]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class buildversion
+    [Guid("4FF8D473-99F3-479F-B90F-781DB6249D44")]
+    public interface Ibuildversion
+    {
+        string Get();
+        int major();
+        int minor();
+        int buildno();
+        int revision();
+    }
+
+    [ComVisible(true)]
+    [Guid("CF461257-D6D4-4CB1-9210-FB6143A95C1C")]
+    [ClassInterface(ClassInterfaceType.None)]
+    public class buildversion : Ibuildversion
     {
         public buildversion()
         {

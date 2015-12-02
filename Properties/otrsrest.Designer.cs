@@ -37,10 +37,9 @@ namespace otrsrest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string password {
+        public byte[] password {
             get {
-                return ((string)(this["password"]));
+                return ((byte[])(this["password"]));
             }
             set {
                 this["password"] = value;
@@ -49,10 +48,9 @@ namespace otrsrest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string entropy {
+        public byte[] entropy {
             get {
-                return ((string)(this["entropy"]));
+                return ((byte[])(this["entropy"]));
             }
             set {
                 this["entropy"] = value;
