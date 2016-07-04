@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "otrsrest", "otrsrest.csproj", "{29E77EE1-9588-4F32-8F97-22EEEC879DD5}"
 EndProject
 Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "otrsrestinstaller", "installer\otrsrestinstaller.isproj", "{5BBCE264-D0EA-4940-B578-82C2701274A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{29E77EE1-9588-4F32-8F97-22EEEC879DD5} = {29E77EE1-9588-4F32-8F97-22EEEC879DD5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

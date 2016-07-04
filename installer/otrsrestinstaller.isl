@@ -342,8 +342,8 @@
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{B92CA9C3-2368-4E89-AAEB-E59A8C7030F6}</td><td>ProgramFiles64Folder</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{E1BB8F55-9A68-49C1-AAEE-4829876E5530}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>otrsrest.Primary_output</td><td>{871A314E-EC8E-4C8F-9311-E081457AB2A2}</td><td>INSTALLDIR</td><td>258</td><td/><td>otrsrest.primary_output</td><td>52</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>otrsrest.tlb</td><td>{F6926FAA-970B-439B-9C8B-079FD37A1204}</td><td>INSTALLDIR</td><td>258</td><td/><td>otrsrest.tlb</td><td>20</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>otrsrest.Primary_output</td><td>{819B0337-56BD-4C57-9F78-121239BCF356}</td><td>INSTALLDIR</td><td>258</td><td/><td>otrsrest.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>otrsrest.tlb</td><td>{2ED8610C-9CB3-4352-AC1F-F4A73995DC52}</td><td>INSTALLDIR</td><td>258</td><td/><td>otrsrest.tlb</td><td>20</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1885,8 +1885,8 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>otrsrest.primary_output</td><td>otrsrest.Primary_output</td><td>otrsrest.Primary output</td><td>0</td><td/><td/><td>0</td><td>1</td><td>&lt;otrsrest&gt;|Built</td><td>3</td><td/></row>
-		<row><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>0</td><td/><td/><td>0</td><td>1</td><td>C:\Program Files\WSET\OTRS REST Connector\otrsrest.tlb</td><td>1</td><td/></row>
+		<row><td>otrsrest.primary_output</td><td>otrsrest.Primary_output</td><td>otrsrest.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;otrsrest&gt;|Built</td><td>3</td><td/></row>
+		<row><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>otrsrest.tlb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\obarritt\Documents\Visual Studio 2013\Projects\otrsrest\bin\Release\otrsrest.tlb</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2030,8 +2030,8 @@
 		<col def="S0">Miscellaneous</col>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_A5A467BD_6224_441A_BD1A_669B755F868A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_B13E8157_0E58_4512_A052_FD026D7873F1_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>otrsrest.Primary_output</td><td/><td/><td>_0FE4DCC0_0D95_4082_98DD_9B64341C4290_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>otrsrest.tlb</td><td/><td/><td>_AA5269ED_200C_498D_A2A6_F05E215BFB24_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>otrsrest.Primary_output</td><td/><td/><td>_256EB961_2D73_4756_9BD0_89601D37BCDF_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>otrsrest.tlb</td><td/><td/><td>_901C2F2C_1A77_4934_A6A1_E4B0B4C972C4_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">

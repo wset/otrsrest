@@ -5,10 +5,10 @@
     <Setting Name="user" Type="System.String" Scope="User">
       <Value Profile="(Default)">restuser</Value>
     </Setting>
-    <Setting Name="password" Type="System.Byte[]" Scope="User">
+    <Setting Name="password" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="entropy" Type="System.Byte[]" Scope="User">
+    <Setting Name="entropy" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="uri" Type="System.String" Scope="User">

@@ -13,7 +13,7 @@ namespace otrsrest.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    internal sealed partial class otrsrest : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class otrsrest : global::System.Configuration.ApplicationSettingsBase {
         
         private static otrsrest defaultInstance = ((otrsrest)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new otrsrest())));
         
@@ -37,9 +37,10 @@ namespace otrsrest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public byte[] password {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string password {
             get {
-                return ((byte[])(this["password"]));
+                return ((string)(this["password"]));
             }
             set {
                 this["password"] = value;
@@ -48,9 +49,10 @@ namespace otrsrest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public byte[] entropy {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string entropy {
             get {
-                return ((byte[])(this["entropy"]));
+                return ((string)(this["entropy"]));
             }
             set {
                 this["entropy"] = value;

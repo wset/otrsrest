@@ -9,6 +9,7 @@ using System.Web;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -174,10 +175,10 @@ namespace otrsrest
     [ComVisible(true)]
     [Guid("86353DF1-8530-495D-B8A3-02281CC5A1F5")]
     [ClassInterface(ClassInterfaceType.None)]
-    public class UpdateSettings : IUpdateSettings
+    public static class UpdateSettings
     {
         [System.STAThread]
-        public bool Update(string _name, string _value)
+        public static bool Update(string _name, string _value)
         {
         // Function to update stored login details for the OTRS connector.
 
@@ -195,8 +196,8 @@ namespace otrsrest
 
                 byte[] enc = ProtectedData.Protect(unenc, entropy, DataProtectionScope.CurrentUser);
 
-                Properties.otrsrest.Default.password = enc;
-                Properties.otrsrest.Default.entropy = entropy;
+                Properties.otrsrest.Default.password = System.Convert.ToBase64String(enc);
+                Properties.otrsrest.Default.entropy = System.Convert.ToBase64String(entropy);
                 Properties.otrsrest.Default.Save();
                 return true;
             }
@@ -214,14 +215,13 @@ namespace otrsrest
         }
 
         [System.STAThread]
-        public string Get(string _name)
+        public static string Get(string _name)
         {
             if(_name != "password" && _name != "entropy" && Properties.otrsrest.Default[_name] != null )
             {
                 return Properties.otrsrest.Default[_name].ToString();
             }
-            else
-            {
+            else {
                 return "";
             }
         }
@@ -282,7 +282,6 @@ namespace otrsrest
             request = new TicketCreateRequest();
             otrs = new HttpClient();
             httpresponse = new HttpResponseMessage();
-            response = new ResponseTicket();
 
             // Set default resource.
             resource = "/" + Properties.otrsrest.Default.resource;
@@ -293,11 +292,12 @@ namespace otrsrest
             otrs.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             // Load username and password.
+
             _user = Properties.otrsrest.Default.user;
-            byte[] enc = Properties.otrsrest.Default.password;
-            byte[] entropy = Properties.otrsrest.Default.entropy;
+            byte[] enc = System.Convert.FromBase64String(Properties.otrsrest.Default.password);
+            byte[] entropy = System.Convert.FromBase64String(Properties.otrsrest.Default.entropy);
             byte[] unenc = ProtectedData.Unprotect(enc, entropy, DataProtectionScope.CurrentUser);
-            _password = Encoding.Unicode.GetString(unenc);
+             _password = Encoding.Unicode.GetString(unenc);
         }
 
         // Request() method runs the REST request returning the HttpStatusCode 
@@ -312,14 +312,63 @@ namespace otrsrest
 
             resourceuri.Query = querystring.ToString();
 
-            // Send REST request to OTRS.
-            httpresponse = await otrs.PostAsJsonAsync(resourceuri.Uri, request);
+            short retries = 0;
 
-            // Process response.
-            response = await httpresponse.Content.ReadAsAsync<ResponseTicket>();
+            while (true)
+            {
+                try
+                {
+                    // Send REST request to OTRS (3 attempts)
+                    httpresponse = await otrs.PostAsJsonAsync(resourceuri.Uri.ToString(), request);
 
-            // Return the HTTP Status Code.
-            return httpresponse.StatusCode;
+                    String rawresponse = await httpresponse.Content.ReadAsStringAsync();
+
+                    
+                    response = new ResponseTicket();
+                    try
+                    {
+                        JToken jsonresponse = JToken.Parse(rawresponse);
+
+                        if (jsonresponse["ArticleID"] != null)
+                        {
+                            response.ArticleID = jsonresponse["ArticleID"].ToString();
+                        }
+
+                        if (jsonresponse["TicketID"] != null)
+                        {
+                            response.TicketID = jsonresponse["TicketID"].ToString();
+                        }
+
+                        if (jsonresponse["TicketNumber"] != null)
+                        {
+                            response.TicketNumber = jsonresponse["TicketNumber"].ToString();
+                        }
+                    }
+                    catch(JsonReaderException e)
+                    {
+                        Console.WriteLine("Invalid JSON Response: " + rawresponse);
+                    }
+
+                    // Return the HTTP Status Code.
+                    return httpresponse.StatusCode;
+                }
+                catch(TaskCanceledException e)
+                {
+                    // Connection timed out, so check if we should retry
+                    retries++;
+                    Console.WriteLine("Connection timeout");
+                    if (retries > 2) throw;
+                    Console.WriteLine("Retry " + retries);
+                }
+                catch(InvalidOperationException e)
+                {
+                    // Connection timed out, so check if we should retry
+                    retries++;
+                    Console.WriteLine("Connection timeout");
+                    if (retries > 2) throw;
+                    Console.WriteLine("Retry " + retries);
+                }
+            }
         }
 
     }
@@ -390,7 +439,53 @@ namespace otrsrest
 
             return TicketNumber;
         }
+
+        public async Task<string> CreateTicketAsync(string Subject, string Message, [Optional] string Title, [Optional] string Customer, [Optional] string Queue, [Optional] string State, [Optional] int Priority, [Optional] string Attachment)
+        {
+            if (!String.IsNullOrEmpty(Customer))
+            {
+                myticket.request.Ticket.CustomerUser = Customer;
+            }
+            if (!String.IsNullOrEmpty(Queue))
+            {
+                myticket.request.Ticket.Queue = Queue;
+            }
+            if (!String.IsNullOrEmpty(State))
+            {
+                myticket.request.Ticket.State = State;
+            }
+            if (Priority != 0)
+            {
+                myticket.request.Ticket.PriorityID = Priority;
+            }
+            if (!String.IsNullOrEmpty(Attachment))
+            {
+                myticket.request.AddAttachment(Attachment);
+            }
+
+            if (String.IsNullOrEmpty(Title))
+            {
+                Title = Subject;
+            }
+            if (String.IsNullOrEmpty(Subject))
+            {
+                Subject = Title;
+            }
+
+            myticket.request.Ticket.Title = Title;
+            myticket.request.Article.Subject = Subject;
+            myticket.request.Article.Body = Message;
+
+            await myticket.Request();
+
+            TicketNumber = myticket.response.TicketNumber;
+            TicketID = myticket.response.TicketID;
+            ArticleID = myticket.response.ArticleID;
+
+            return TicketNumber;
+        }
     }
+
 
     [ComVisible(true)]
     [Guid("4FF8D473-99F3-479F-B90F-781DB6249D44")]
